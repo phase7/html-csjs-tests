@@ -2,27 +2,37 @@
 <html>
 <head>
 	<title>specific time</title>
+	<style type="text/css">
+		h3{
+			color: #09B032;
+			text-align: right;
+		}
+	</style>
 </head>
 <body onload="startclock()">
-<h3 id="clctime"></h3>
 
-<script type="text/javascript">
-	function startclock(){
-		setInterval(function(){update();}, 1000 );
-	}
+	<h3 id="date"> Time </h3>
+	<h3 id="clctime"></h3>
 
-	function update(){
-		t = new Date();
-		// day = t.getDay();
-		// month = t.getMonth();
-		// year = t.getFullYear();
-		// hours = t.getHours();
-		// minutes = t.getMinutes();
-		// sec = t. getSeconds();
+	<script type="text/javascript">
+		function startclock(){
+			d = new Date();
+			document.getElementById("date").innerHTML = d.toDateString();
+			setInterval(function(){update();}, 1000 );
+		}
 
-		time = t.toLocaleTimeString();
-		document.getElementById("clctime").innerHTML = time;
-	}
-</script>
+		function update(){
+			t = new Date();
+			// day = t.getDay();
+			// month = t.getMonth();
+			// year = t.getFullYear();
+			// hours = t.getHours();
+			// minutes = t.getMinutes();
+			// sec = t. getSeconds();
+
+			time = t.toLocaleTimeString();
+			document.getElementById("clctime").innerHTML = time;
+		}
+	</script>
 </body>
 </html>
