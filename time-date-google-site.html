@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html>
+<head>
+													<!-- css -->
+		<style type="text/css">
+		:root {
+  --blueActive: rgba(140, 225, 255, 1);
+  --blueNotActive: rgba(90, 225, 255, 0.025);
+  --blueBoxShadow: 0px -2px 25px rgba(90, 255, 255, 0.4);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto Mono", monospace;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(44, 44, 55);
+}
+
+.numbers {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.colon {
+  font-size: 85pt;
+  color: var(--blueActive);
+}
+
+.number {
+  width: 250px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.digit {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100px;
+}
+
+.line {
+  display: block;
+  background-color: var(--blueNotActive);
+}
+
+.line-horizontal {
+  width: 100px;
+  height: 10px;
+}
+
+.line-vertical {
+  width: 10px;
+  height: 100px;
+}
+
+/*Lighting up the correct lines to make the numbers.*/
+
+/*0*/
+.num0 .line-top,
+.num0 .line-right-top,
+.num0 .line-left-top,
+.num0 .line-right-bottom,
+.num0 .line-left-bottom,
+.num0 .line-bottom,
+/*1*/ .num1 .line-right-top,
+.num1 .line-right-bottom,
+/*2*/ .num2 .line-top,
+.num2 .line-right-top,
+.num2 .line-middle,
+.num2 .line-left-bottom,
+.num2 .line-bottom,
+/*3*/ .num3 .line-top,
+.num3 .line-right-top,
+.num3 .line-middle,
+.num3 .line-right-bottom,
+.num3 .line-bottom,
+/*4*/ .num4 .line-right-top,
+.num4 .line-middle,
+.num4 .line-left-top,
+.num4 .line-right-bottom,
+/*5*/ .num5 .line-top,
+.num5 .line-left-top,
+.num5 .line-middle,
+.num5 .line-right-bottom,
+.num5 .line-bottom,
+/*6*/ .num6 .line-top,
+.num6 .line-left-top,
+.num6 .line-middle,
+.num6 .line-left-bottom,
+.num6 .line-right-bottom,
+.num6 .line-bottom,
+/*7*/ .num7 .line-top,
+.num7 .line-right-top,
+.num7 .line-right-bottom,
+/*8*/ .num8 .line,
+/*9*/ .num9 .line-top,
+.num9 .line-left-top,
+.num9 .line-middle,
+.num9 .line-right-top,
+.num9 .line-right-bottom,
+.num9 .line-bottom {
+  background-color: var(--blueActive);
+  box-shadow: var(--blueBoxShadow);
+}
+
+/*Make 0, 1, 4, and 7 use corners when lighting up too*/
+.num0 .line-right-top::after,
+.num0 .line-left-top::after,
+.num1 .line-right-bottom::after,
+.num1 .line-right-top::after,
+.num4 .line-right-bottom::after,
+.num4 .line-right-top::after,
+.num4 .line-left-top::after,
+.num7 .line-right-bottom::after,
+.num7 .line-right-top::after {
+  content: "";
+  border-top: 10px solid var(--blueActive);
+  border-bottom: 10px solid var(--blueActive);
+  margin-top: -10px;
+  height: 100%;
+  display: block;
+}
+
+.inactive .line {
+  background-color: var(--blueNotActive);
+  box-shadow: none;
+}
+.inactive .line::after {
+  border-color: transparent;
+}
+.colon-second.inactive {
+  color: var(--blueNotActive);
+}
+
+.footer-wrapper {
+  display: flex;
+  justify-content: space-between;
+  color: white;
+  text-align: center;
+}
+.footer {
+  width: 250px;
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-around;
+}
+.footer_number1 {
+}
+.footer_number2 {
+}
+.footer_number3 {
+}
+
+/*Pretty toggle*/
+input[type="checkbox"] {
+  height: 0;
+  width: 0;
+  visibility: hidden;
+  display: none;
+}
+
+label {
+  cursor: pointer;
+  text-indent: -9999px;
+  width: 50px;
+  height: 25px;
+  background: var(--blueNotActive);
+  display: block;
+  border: 2px solid white;
+  border-radius: 100px;
+  position: relative;
+}
+
+label:after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 3px;
+  width: 13px;
+  height: 13px;
+  background: white;
+  border: 2px solid rgb(44, 44, 55);
+  border-radius: 90px;
+  transition: 0.3s;
+}
+
+input:checked + label {
+  background: var(--blueActive);
+}
+
+input:checked + label:after {
+  left: calc(100% - 5px);
+  transform: translateX(-100%);
+}
+
+/*AM PM*/
+.ampm-wrapper {
+  height: 300px;
+}
+.ampm {
+  color: var(--blueActive);
+  font-size: 50pt;
+}
+
+	</style>
+</head>
+<body>
+
+													<!-- html -->
+	<div class="wrapper">
+			<div class="numbers">
+				<div class="number num-hour">
+
+					<div class="digit digit1">
+						<div class="line line-top line-horizontal"></div>
+
+						<div class="line line-left-top line-vertical"></div>
+						<div class="line line-right-top line-vertical"></div>
+
+						<div class="line line-middle line-horizontal"></div>
+
+						<div class="line line-left-bottom line-vertical"></div>
+						<div class="line line-right-bottom line-vertical"></div>
+
+						<div class="line line-bottom line-horizontal"></div>					
+					</div>
+					<div class="digit digit2">
+						<div class="line line-top line-horizontal"></div>
+
+						<div class="line line-left-top line-vertical"></div>
+						<div class="line line-right-top line-vertical"></div>
+
+						<div class="line line-middle line-horizontal"></div>
+
+						<div class="line line-left-bottom line-vertical"></div>
+						<div class="line line-right-bottom line-vertical"></div>
+
+						<div class="line line-bottom line-horizontal"></div>
+					</div>
+
+				</div>
+
+				<span class="colon colon-minute">:</span>
+
+				<div class="number num-minute">
+					<div class="digit digit1">
+						<div class="line line-top line-horizontal"></div>
+
+						<div class="line line-left-top line-vertical"></div>
+						<div class="line line-right-top line-vertical"></div>
+
+						<div class="line line-middle line-horizontal"></div>
+
+						<div class="line line-left-bottom line-vertical"></div>
+						<div class="line line-right-bottom line-vertical"></div>
+
+						<div class="line line-bottom line-horizontal"></div>
+					</div>
+					<div class="digit digit2">
+						<div class="line line-top line-horizontal"></div>
+
+						<div class="line line-left-top line-vertical"></div>
+						<div class="line line-right-top line-vertical"></div>
+
+						<div class="line line-middle line-horizontal"></div>
+
+						<div class="line line-left-bottom line-vertical"></div>
+						<div class="line line-right-bottom line-vertical"></div>
+
+						<div class="line line-bottom line-horizontal"></div>
+					</div>
+				</div>
+
+				<span class="colon colon-second">:</span>
+
+				<div class="number num-second">
+					<div class="digit digit1">
+						<div class="line line-top line-horizontal"></div>
+
+						<div class="line line-left-top line-vertical"></div>
+						<div class="line line-right-top line-vertical"></div>
+
+						<div class="line line-middle line-horizontal"></div>
+
+						<div class="line line-left-bottom line-vertical"></div>
+						<div class="line line-right-bottom line-vertical"></div>
+
+						<div class="line line-bottom line-horizontal"></div>
+					</div>
+					<div class="digit digit2">
+						<div class="line line-top line-horizontal"></div>
+
+						<div class="line line-left-top line-vertical"></div>
+						<div class="line line-right-top line-vertical"></div>
+
+						<div class="line line-middle line-horizontal"></div>
+
+						<div class="line line-left-bottom line-vertical"></div>
+						<div class="line line-right-bottom line-vertical"></div>
+						<div class="line line-bottom line-horizontal"></div>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="footer-wrapper">
+				<div class="footer footer_number1">
+					<span>12h</span>
+					<input type="checkbox" class="toggle-12-24" id="switch1"> 
+					<label for="switch1"></label>
+					<span>24h</span>
+				</div>
+				<div class="footer footer_number2">
+					
+				</div>
+				<div class="footer footer_number3">
+					<span>Off</span>
+					<input type="checkbox" checked="checked" class="toggle-second" id="switch3"> 
+					<label for="switch3"></label>
+					<span>On</span>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="ampm-wrapper">
+			<span class="ampm"></span>
+		</div>
+
+													<!-- script -->
+<script type="text/javascript">
+	/*-------------------*/
+/*Clock Functionality*/
+
+//Selectors
+const numSecond_Digit1 = document.querySelectorAll('.num-second .digit1')[0];
+const numSecond_Digit2 = document.querySelectorAll('.num-second .digit2')[0];
+const numSecondArray = [numSecond_Digit1, numSecond_Digit2];
+
+const numMinute_Digit1 = document.querySelectorAll('.num-minute .digit1')[0];
+const numMinute_Digit2 = document.querySelectorAll('.num-minute .digit2')[0];
+const numMinuteArray = [numMinute_Digit1, numMinute_Digit2];
+
+const numHour_Digit1 = document.querySelectorAll('.num-hour .digit1')[0];
+const numHour_Digit2 = document.querySelectorAll('.num-hour .digit2')[0];
+const numHourArray = [numHour_Digit1, numHour_Digit2];
+
+
+
+const toggleHour = document.getElementsByClassName('toggle-12-24')[0];
+const ampm = document.getElementsByClassName('ampm')[0];
+
+timer();
+setInterval(timer, 1000);
+
+function timer(){
+
+	const now = new Date();
+
+	//Get seconds, minute, an hours from Date.
+	const seconds = now.getSeconds(),
+	      minutes = now.getMinutes(),
+	      hours = now.getHours();
+
+	//Make hours either 12 or 24 hour format
+	let hours_12;
+	if(toggleHour.checked){
+		hours_12 = hours; //Make 24 hour format
+	} else {
+		hours_12 = hours % 12 || 12; //Make hours 12 hour format
+	}
+
+	//Run timer function again to refresh hour format immediately
+	toggleHour.onclick = function(){
+		timer();
+	}
+
+
+	//Make the values always double-digit
+	let secondsDbl = ("0" + seconds).slice(-2),
+	    minutesDbl = ("0" + minutes).slice(-2),
+	    hoursDbl   = ("0" + hours_12).slice(-2);
+
+	//Seperate the two digits of each into an array
+	const secondsOutput = [],
+	      stringNumberSeconds = secondsDbl.toString();
+
+	const minutesOutput = [],
+	      stringNumberMinutes = minutesDbl.toString();
+
+	const hoursOutput = [],
+	      stringNumberHours = hoursDbl.toString();
+
+	for (i = 0; i < 2; i++){
+		secondsOutput.push(+stringNumberSeconds.charAt(i));
+		minutesOutput.push(+stringNumberMinutes.charAt(i));
+		hoursOutput.push(+stringNumberHours.charAt(i));
+	}
+
+	for(i = 0; i < 10; i++){
+
+		//I may find a better way to do this later, but this works for now.
+		for (j = 0; j < 2; j++){
+			if (secondsOutput[j] == i){
+				numSecondArray[j].classList.add('num'+i);
+			} else {
+				numSecondArray[j].classList.remove('num'+i);
+			}
+
+			if (minutesOutput[j] == i){
+				numMinuteArray[j].classList.add('num'+i);
+			} else {
+				numMinuteArray[j].classList.remove('num'+i);
+			}
+
+			if (hoursOutput[j] == i){
+				numHourArray[j].classList.add('num'+i);
+			} else {
+				numHourArray[j].classList.remove('num'+i);
+			}
+		}
+
+	}
+
+
+	//Decide when AM or PM should display.
+	if(now.getHours() < 12){
+		ampm.innerHTML = "AM";
+	}else{
+		ampm.innerHTML = "PM";
+	}
+	
+}
+
+
+
+
+/*----------------------*/
+/*Toggle display seconds*/
+
+//Selectors
+const toggleSecond = document.getElementsByClassName('toggle-second')[0];
+const secondsColon = document.getElementsByClassName('colon-second')[0];
+
+function secondsToggle(){
+	for(i = 0; i < 2; i++){
+		if (toggleSecond.checked){
+			numSecondArray[i].classList.remove('inactive');
+			secondsColon.classList.remove('inactive');
+		} else {
+			numSecondArray[i].classList.add('inactive');
+			secondsColon.classList.add('inactive');
+		}
+	}
+};
+
+setTimeout(secondsToggle, 50);
+
+//Switch display styles depending on if checkbox is checked.
+toggleSecond.onclick = function(){
+	secondsToggle();
+}
+</script>
+</body>
+</html>
